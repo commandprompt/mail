@@ -149,7 +149,6 @@ module Mail
     # TODO: Validate that preamble and epilogue are valid for requested encoding
     def encoded(transfer_encoding = '8bit')
       if multipart?
-        self.sort_parts!
         encoded_parts = parts.map { |p| p.encoded }
         ([preamble] + encoded_parts).join(crlf_boundary) + end_boundary + epilogue.to_s
       else

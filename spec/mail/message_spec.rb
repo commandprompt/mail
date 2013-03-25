@@ -1589,23 +1589,6 @@ describe Mail::Message do
     end
   end
 
-  describe "ordering messages" do
-    it "should put all attachments as the last item" do
-      # XXX: AFAICT, this is not actually working. The code does not appear to implement this. -- singpolyma
-      mail = Mail.new
-      mail.attachments['image.png'] = "\302\302\302\302"
-      p = Mail::Part.new(:content_type => 'multipart/alternative')
-      p.add_part(Mail::Part.new(:content_type => 'text/html', :body => 'HTML TEXT'))
-      p.add_part(Mail::Part.new(:content_type => 'text/plain', :body => 'PLAIN TEXT'))
-      mail.add_part(p)
-      mail.encoded
-      mail.parts[0].mime_type.should eq "multipart/alternative"
-      mail.parts[0].parts[0].mime_type.should eq "text/plain"
-      mail.parts[0].parts[1].mime_type.should eq "text/html"
-      mail.parts[1].mime_type.should eq "image/png"
-    end
-  end
-
   describe "attachment query methods" do
     it "shouldn't die with an invalid Content-Disposition header" do
       mail = Mail.new('Content-Disposition: invalid')
