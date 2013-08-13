@@ -70,7 +70,7 @@ module Mail
       end
 
       if hash[:body].respond_to? :force_encoding and hash[:body].respond_to? :valid_encoding?
-        if not hash[:body].valid_encoding? and default_values[:content_transfer_encoding].downcase == "binary"
+        if not hash[:body].valid_encoding? and hash[:content_transfer_encoding].downcase == "binary"
           hash[:body].force_encoding("BINARY")
         end
       end
